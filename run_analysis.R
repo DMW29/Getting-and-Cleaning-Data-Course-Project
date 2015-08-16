@@ -104,7 +104,7 @@ testdata <- cbind.data.frame(subjecttest, ytestlab, xtest)
 expdata <- rbind.data.frame(traindata, testdata)
 
 ## Subset expdata to include only those columns with mean and std in their name.
-tidyvars <- grep("-mean|-std", names(expdata), value = TRUE)
+tidyvars <- grep("[Mm]ean|[Ss]td", names(expdata), value = TRUE)
 tidy <- expdata[,c("subject", "activity_label", tidyvars)]
 
 ## Summarize the data to calculate the means of each variable by subject and 
@@ -113,4 +113,4 @@ tidymelt <- melt(tidy, id=c("subject", "activity_label"), measure.vars = tidyvar
 subact <- dcast(tidymelt, subject + activity_label ~ variable, mean)
 
 ## Write the summarized tidy data set to disc.
-write.table(subact, file = "./tidydata.txt")
+write.table(subact, file = "./tidydata.txt", row.names = FALSE)
